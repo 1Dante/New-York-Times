@@ -1,0 +1,18 @@
+/* 
+  Localizable.strings
+  NewYorkTimes
+
+  Created by MacBook on 06.07.2023.
+  
+
+*/
+
+"MAIN_TITLE_NAV_BAR" = "Categories";
+"PUBLISHED" = "published";
+"PUBLISHER" = "publisher";
+"ALERT_ERROR" = "Error";
+"ALERT_MESSAGE" = "Something goes wrong with cashe";
+"ACTION_TITLE" = "OK";
+
+
+

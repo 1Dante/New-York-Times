@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  NewYorkTimes
+
+  Created by MacBook on 06.07.2023.
+  
+*/
+
+"MAIN_TITLE_NAV_BAR" = "Категорії";
+"PUBLISHED" = "видано";
+"PUBLISHER" = "видавник";
+"ALERT_ERROR" = "Помилка";
+"ALERT_MESSAGE" = "Щось пішло не так";
+"ACTION_TITLE" = "OK";

@@ -1,18 +1,18 @@
 //
-//  MainView.swift
+//  DetailView.swift
 //  NewYorkTimes
 //
-//  Created by MacBook on 06.07.2023.
+//  Created by MacBook on 07.07.2023.
 //
 
 import UIKit
 
-final class MainView: UIView {
+class DetailView: UIView {
     
     var collectionView: UICollectionView!
 
-    init() {
-        super.init(frame: .zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setUp()
         setUpCollectionView()
     }
@@ -31,11 +31,11 @@ final class MainView: UIView {
         addSubview(collectionView)
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.reuseIdentifier)
+        collectionView.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: BookCollectionViewCell.reuseIdentifier)
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 12),
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            collectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 50),
+            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
         
@@ -48,7 +48,7 @@ final class MainView: UIView {
          fullSizeItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)
         let groupSize = NSCollectionLayoutSize(
          widthDimension: .fractionalWidth(1),
-         heightDimension: .absolute(74))
+         heightDimension: .estimated(200))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [fullSizeItem])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none

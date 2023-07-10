@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G419" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Books" representedClassName="Books" syncable="YES" codeGenerationType="class">
+        <attribute name="author" optional="YES" attributeType="String"/>
+        <attribute name="descriptionBook" optional="YES" attributeType="String"/>
+        <attribute name="encodedCategoryName" optional="YES" attributeType="String"/>
+        <attribute name="imageURL" optional="YES" attributeType="Binary"/>
+        <attribute name="publisherBook" optional="YES" attributeType="String"/>
+        <attribute name="rank" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Categories" inverseName="books" inverseEntity="Categories"/>
+    </entity>
+    <entity name="Categories" representedClassName="Categories" syncable="YES" codeGenerationType="class">
+        <attribute name="encodedName" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="newestPublishedDate" optional="YES" attributeType="String"/>
+        <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Books" inverseName="category" inverseEntity="Books"/>
+    </entity>
+</model>

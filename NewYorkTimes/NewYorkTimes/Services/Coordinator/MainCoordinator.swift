@@ -27,4 +27,14 @@ class MainCoordinator: Coordinator {
     func popToPreviousVC() {
         navigationController.popViewController(animated: true)
     }
+    
+    func openDetailVC(viewModel: DetailViewModel) {
+        let detailVC = DetailViewController(viewModel: viewModel)
+        navigationController.pushViewController(detailVC, animated: true)
+    }
+    
+    func openWebView(url: String) {
+        let webVC = WebViewController(url: url)
+        navigationController.pushViewController(webVC, animated: true)
+    }
 }
