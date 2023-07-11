@@ -10,7 +10,7 @@ import UIKit
 class CategoryCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = String(describing: CategoryCollectionViewCell.self)
-
+    
     let categoryNameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
@@ -58,7 +58,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         layer.cornerRadius = 18
         
         addSubview(categoryNameLabel)
-    
+        
         let stackView = UIStackView(arrangedSubviews: [publishedTitleLabel, publishedDateLabel])
         stackView.axis = .horizontal
         stackView.alignment = .trailing

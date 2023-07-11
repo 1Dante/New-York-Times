@@ -13,8 +13,8 @@ struct LiveData<Type:Codable>: Codable {
     var count: Int?
     
     enum CodingKeys: String, CodingKey {
-            case results
-            case count = "num_results"
+        case results
+        case count = "num_results"
     }
 }
 
@@ -31,7 +31,7 @@ struct ResultNetwork: Codable {
         case encodedName = "list_name_encoded"
         case newestPublishedDate = "newest_published_date"
         case books
-    }   
+    }
 }
 
 struct Book: Codable {
@@ -54,7 +54,7 @@ struct BuyLinks: Codable {
     let name: String
     let url: String
 }
-              
+
 
 
 

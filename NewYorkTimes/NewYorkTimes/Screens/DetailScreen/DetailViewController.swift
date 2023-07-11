@@ -29,7 +29,6 @@ final class DetailViewController: UIViewController {
         setUp()
         setUpActivityIndicator()
     }
-
     
     private func setUp() {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
@@ -39,7 +38,7 @@ final class DetailViewController: UIViewController {
         titleLabel.topAnchor.constraint(equalTo: detailView.safeAreaLayoutGuide.topAnchor, constant: -44).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: detailView.leadingAnchor, constant: 70).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: detailView.trailingAnchor, constant: -70).isActive = true
-
+        
         detailView.collectionView.dataSource = self
         detailView.collectionView.delegate = self
         
@@ -76,7 +75,7 @@ final class DetailViewController: UIViewController {
         let url = viewModel.books[indexPath.row].amazonBuyLink
         coordinator?.openWebView(url: url)
     }
-
+    
     @objc func didTapAppleButton(sender: UIButton) {
         guard let cell = sender.superview?.superview as? BookCollectionViewCell else { return }
         guard let indexPath = detailView.collectionView.indexPath(for: cell) else { return }

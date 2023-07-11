@@ -33,6 +33,4 @@ enum EndpointParameters: Endpoint {
             return queryItem
         }
     }
-    
-    
 }

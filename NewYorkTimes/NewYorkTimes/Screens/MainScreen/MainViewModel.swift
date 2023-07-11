@@ -29,24 +29,20 @@ class MainViewModel {
         do {
             let data = try await NetworkManager.shared.fetchData(type: LiveData<[ResultNetwork]>.self, endpoint: .lists)
             let _categories = CoreDataManager.shared.fetchCategories()
-                data.results.forEach { item in
-                    self.categories.append(CategoriesViewModelCell(title: item.displayName,
-                                                                   publishedDate: item.newestPublishedDate ?? "",
-                                                                   encodedTitle: item.encodedName))
-                    Task {
-                        if _categories.contains(where: { $0.encodedName == item.encodedName && Date.getDate(str: $0.newestPublishedDate ?? "") <  Date.getDate(str: item.newestPublishedDate ?? "") }) {
+            data.results.forEach { item in
+                self.categories.append(CategoriesViewModelCell(title: item.displayName,
+                                                               publishedDate: item.newestPublishedDate ?? "",
+                                                               encodedTitle: item.encodedName))
+                Task {
+                    if _categories.contains(where: { $0.encodedName == item.encodedName && Date.getDate(str: $0.newestPublishedDate ?? "") <  Date.getDate(str: item.newestPublishedDate ?? "") }) {
                         CoreDataManager.shared.deleteCategory(categories: _categories.first(where: { $0.encodedName == item.encodedName } ))
-                         await CoreDataManager.shared.addCategory(categorie: item)
+                        await CoreDataManager.shared.addCategory(categorie: item)
                     } else if !_categories.contains(where: { $0.encodedName == item.encodedName }) {
                         //add item if not exist
                         await CoreDataManager.shared.addCategory(categorie: item)
                     }
-                    
                 }
-                    
             }
-            CoreDataManager.shared.deleteCategory(categories: _categories[0])
-            //let books = CoreDataManager.shared.fetchBooks(encodedName: _categories[0].encodedName ?? "")
             await reloadData(true)
         } catch let error {
             let _categories = CoreDataManager.shared.fetchCategories()

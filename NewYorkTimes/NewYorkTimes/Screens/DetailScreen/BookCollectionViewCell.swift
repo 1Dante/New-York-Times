@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 
 class BookCollectionViewCell: UICollectionViewCell {
-   
+    
     static let reuseIdentifier = String(describing: BookCollectionViewCell.self)
     
     let rankLabel: UILabel = {
@@ -82,7 +82,6 @@ class BookCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-
     private func setUp() {
         addSubview(rankLabel)
         addSubview(bookImageView)
@@ -150,6 +149,10 @@ class BookCollectionViewCell: UICollectionViewCell {
         publisherLabel.text = NSLocalizedString("PUBLISHER", comment: "") + " " + viewModel.publisher
         if let url = URL(string: viewModel.imageURL) {
             bookImageView.kf.setImage(with: url)
+        }
+        if viewModel.isImageDownloaded {
+            guard let data = viewModel.imageData else { return }
+            bookImageView.image = UIImage(data: data)
         }
         descriptionLabel.text = viewModel.description
     }
