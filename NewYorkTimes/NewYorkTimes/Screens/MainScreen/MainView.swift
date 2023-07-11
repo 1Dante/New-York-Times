@@ -10,7 +10,7 @@ import UIKit
 final class MainView: UIView {
     
     var collectionView: UICollectionView!
-
+    
     init() {
         super.init(frame: .zero)
         setUp()
@@ -20,7 +20,6 @@ final class MainView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     private func setUp() {
         backgroundColor = .bgColor
@@ -38,17 +37,16 @@ final class MainView: UIView {
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
-        
     }
     
-     func generateLayout() -> UICollectionViewLayout {
-         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+    func generateLayout() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1))
         let fullSizeItem = NSCollectionLayoutItem(layoutSize: itemSize)
-         fullSizeItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)
+        fullSizeItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)
         let groupSize = NSCollectionLayoutSize(
-         widthDimension: .fractionalWidth(1),
-         heightDimension: .absolute(74))
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(74))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [fullSizeItem])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none

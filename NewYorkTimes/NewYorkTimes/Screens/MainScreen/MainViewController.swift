@@ -13,7 +13,7 @@ final class MainViewController: UIViewController {
     private var coordinator: MainCoordinator?
     private let viewModel = MainViewModel()
     private let activityIndicator = UIActivityIndicatorView(style: .medium)
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view = mainView
@@ -25,7 +25,7 @@ final class MainViewController: UIViewController {
         let title = NSLocalizedString("MAIN_TITLE_NAV_BAR", comment: "")
         navigationItem.titleView = UILabel.title(with: title)
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-
+        
         mainView.collectionView.dataSource = self
         mainView.collectionView.delegate = self
         
@@ -56,10 +56,12 @@ final class MainViewController: UIViewController {
         let message = NSLocalizedString("ALERT_MESSAGE", comment: "")
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         let actionTitle = NSLocalizedString("ACTION_TITLE", comment: "")
-        alert.addAction(UIAlertAction(title: actionTitle, style: .cancel))
+        let action = UIAlertAction(title: actionTitle, style: .cancel) {_ in
+            self.activityIndicator.stopAnimating()
+        }
+        alert.addAction(action)
         self.present(alert, animated: true)
     }
-    
 }
 
 extension MainViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -72,7 +74,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         cell.configure(with: viewModel.categories[indexPath.row])
         return cell
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailViewModel = DetailViewModel(category: viewModel.categories[indexPath.row])

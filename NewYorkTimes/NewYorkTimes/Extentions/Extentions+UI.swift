@@ -20,7 +20,6 @@ extension UILabel {
         label.font = UIFont(name: "Chomsky", size: 28)
         label.text = text
         label.textAlignment = .center
-       // label.sizeToFit()
         label.numberOfLines = 2
         return label
     }

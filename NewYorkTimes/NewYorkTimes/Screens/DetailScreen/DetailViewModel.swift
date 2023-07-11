@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Kingfisher
 
 struct BookCellViewModel {
     let rank: String
@@ -16,6 +17,8 @@ struct BookCellViewModel {
     let imageURL: String
     let amazonBuyLink: String
     let appleBuyLink: String
+    var isImageDownloaded: Bool = false
+    var imageData: Data?
 }
 
 class DetailViewModel {
@@ -26,11 +29,10 @@ class DetailViewModel {
     
     init(category: CategoriesViewModelCell) {
         Task {
-           await fetchBookLists(with: category.encodedTitle)
+            await fetchBookLists(with: category.encodedTitle)
         }
         title = category.title
     }
-    
     
     func fetchBookLists(with encodedName: String) async {
         do {
@@ -44,7 +46,7 @@ class DetailViewModel {
                     amazonLink = item.buyLinks[0].url
                     appleLink = item.buyLinks[1].url
                 }
-
+                
                 self.books.append(BookCellViewModel(rank: String(item.rank),
                                                     title: item.title,
                                                     description: item.description,
@@ -52,13 +54,33 @@ class DetailViewModel {
                                                     author: item.author,
                                                     imageURL: item.imageURL,
                                                     amazonBuyLink: amazonLink,
-                                                    appleBuyLink: appleLink))
+                                                    appleBuyLink: appleLink,
+                                                    imageData: nil))
             })
-            CoreDataManager.shared.addBooks(books: self.books, categoryEncodedName: encodedName)
+            
+            await reloadData(true)
+            
+            let fetchedBooks = CoreDataManager.shared.fetchBooks(encodedName: encodedName)
+            let fetchedCategories = CoreDataManager.shared.fetchCategories()
+            if fetchedBooks.isEmpty {
+                for var item in books {
+                    guard let url = URL(string: item.imageURL) else { return }
+                    let resource = KF.ImageResource(downloadURL: url)
+                    KingfisherManager.shared.retrieveImage(with: resource, options: nil, progressBlock: nil) { result in
+                        switch result {
+                        case .success(let value):
+                            item.imageData = value.data()
+                            CoreDataManager.shared.addBooks(bookViewModel: item, categoryEncodedName: encodedName, categories: fetchedCategories)
+                        case .failure(let error):
+                            print("Error: \(error)")
+                        }
+                    }
+                }
+                
+            }
             await reloadData(true)
         } catch let error {
             print(error)
-            print("mis data")
             let fetchedBooks = CoreDataManager.shared.fetchBooks(encodedName: encodedName)
             if !fetchedBooks.isEmpty {
                 fetchedBooks.forEach({ item in
@@ -68,8 +90,10 @@ class DetailViewModel {
                                                         publisher: item.publisherBook ?? "",
                                                         author: item.author ?? "",
                                                         imageURL: "",
-                                                        amazonBuyLink: "",
-                                                        appleBuyLink: ""))
+                                                        amazonBuyLink: item.amazonLink ?? "",
+                                                        appleBuyLink: item.appleLink ?? "",
+                                                        isImageDownloaded: true,
+                                                        imageData: item.imageURL))
                 })
                 await reloadData(true)
             } else {

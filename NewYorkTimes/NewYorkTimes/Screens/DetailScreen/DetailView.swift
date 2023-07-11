@@ -10,7 +10,7 @@ import UIKit
 class DetailView: UIView {
     
     var collectionView: UICollectionView!
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUp()
@@ -20,7 +20,6 @@ class DetailView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     private func setUp() {
         backgroundColor = .bgColor
@@ -41,14 +40,14 @@ class DetailView: UIView {
         
     }
     
-     func generateLayout() -> UICollectionViewLayout {
-         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+    func generateLayout() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1))
         let fullSizeItem = NSCollectionLayoutItem(layoutSize: itemSize)
-         fullSizeItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)
+        fullSizeItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)
         let groupSize = NSCollectionLayoutSize(
-         widthDimension: .fractionalWidth(1),
-         heightDimension: .estimated(200))
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(200))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [fullSizeItem])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none
