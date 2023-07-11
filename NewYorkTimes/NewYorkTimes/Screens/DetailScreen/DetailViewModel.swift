@@ -54,11 +54,14 @@ class DetailViewModel {
                                                     amazonBuyLink: amazonLink,
                                                     appleBuyLink: appleLink))
             })
-            CoreDataManager.shared.addBooks(books: self.books, categoryEncodedName: encodedName)
+            let fetchedBooks = CoreDataManager.shared.fetchBooks(encodedName: encodedName)
+            print("fetched books: \(fetchedBooks.count)")
+            if fetchedBooks.isEmpty {
+                CoreDataManager.shared.addBooks(books: self.books, categoryEncodedName: encodedName)
+            }
             await reloadData(true)
         } catch let error {
             print(error)
-            print("mis data")
             let fetchedBooks = CoreDataManager.shared.fetchBooks(encodedName: encodedName)
             if !fetchedBooks.isEmpty {
                 fetchedBooks.forEach({ item in

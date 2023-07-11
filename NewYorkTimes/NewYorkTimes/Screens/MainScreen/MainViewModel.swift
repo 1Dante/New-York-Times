@@ -30,13 +30,11 @@ class MainViewModel {
             let data = try await NetworkManager.shared.fetchData(type: LiveData<[ResultNetwork]>.self, endpoint: .lists)
             let _categories = CoreDataManager.shared.fetchCategories()
                 data.results.forEach { item in
-                  //  Task {
-                    //    print("in task before append")
                     self.categories.append(CategoriesViewModelCell(title: item.displayName,
-                                                                   publishedDate: item.newestPublishedDate,
+                                                                   publishedDate: item.newestPublishedDate ?? "",
                                                                    encodedTitle: item.encodedName))
                     Task {
-                    if _categories.contains(where: { $0.encodedName == item.encodedName && Date.getDate(str: $0.newestPublishedDate ?? "") <  Date.getDate(str: item.newestPublishedDate) }) {
+                        if _categories.contains(where: { $0.encodedName == item.encodedName && Date.getDate(str: $0.newestPublishedDate ?? "") <  Date.getDate(str: item.newestPublishedDate ?? "") }) {
                         CoreDataManager.shared.deleteCategory(categories: _categories.first(where: { $0.encodedName == item.encodedName } ))
                          await CoreDataManager.shared.addCategory(categorie: item)
                     } else if !_categories.contains(where: { $0.encodedName == item.encodedName }) {
@@ -45,13 +43,12 @@ class MainViewModel {
                     }
                     
                 }
+                    
             }
-            print("data after parse internet")
-            print(categories.count)
+            CoreDataManager.shared.deleteCategory(categories: _categories[0])
+            //let books = CoreDataManager.shared.fetchBooks(encodedName: _categories[0].encodedName ?? "")
             await reloadData(true)
         } catch let error {
-            print("mis data")
-            print(error)
             let _categories = CoreDataManager.shared.fetchCategories()
             if !_categories.isEmpty {
                 _categories.forEach { category in

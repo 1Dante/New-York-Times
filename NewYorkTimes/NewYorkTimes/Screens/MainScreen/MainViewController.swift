@@ -56,7 +56,10 @@ final class MainViewController: UIViewController {
         let message = NSLocalizedString("ALERT_MESSAGE", comment: "")
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         let actionTitle = NSLocalizedString("ACTION_TITLE", comment: "")
-        alert.addAction(UIAlertAction(title: actionTitle, style: .cancel))
+        let action = UIAlertAction(title: actionTitle, style: .cancel) {_ in
+            self.activityIndicator.stopAnimating()
+        }
+        alert.addAction(action)
         self.present(alert, animated: true)
     }
     

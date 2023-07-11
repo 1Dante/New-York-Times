@@ -22,7 +22,7 @@ struct ResultNetwork: Codable {
     let listName: String
     let displayName: String
     let encodedName: String
-    let newestPublishedDate: String
+    let newestPublishedDate: String?
     let books: [Book]?
     
     enum CodingKeys: String, CodingKey {
